@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
+
+.admin-apo-page {
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1a1a;
+    min-height: 100vh;
+    gap: 20px;
+    align-items: center;
+    background-image: url("../assets/accesscheds/accessschedbg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.admin-apo-main-text {
+    color: white;
+    font-size: 40px;
+    text-align: justify;
+    font-family: "Montserrat";
+    font-weight: bolder;
+    margin-left: 100px;
+}
+
+.admin-upcoming-apo-main-text {
+    color: white;
+    font-size: 40px;
+    text-align: justify;
+    font-family: "Montserrat";
+    font-weight: bolder;
+    margin-left: 270px;
+}
+
+.admin-apo-no-appointments {
+    text-align: center;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+    padding: 20px;
+    border: 1px dashed #fff;
+    max-width: 1000px;
+    margin-top: 100px;
+    margin-left: 300px;
+}
+
+.admin-apo-no-appointments a {
+    text-decoration: none;
+    color: blue;
+}
+
+.admin-apo-table-container {
+    width: 100%;
+    max-width: 799px;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-left: 550px;
+}
+
+.admin-upcoming-apo-table-container {
+    width: 100%;
+    max-width: 812px;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-left: 480px;
+}
+
+.admin-upcoming-apo-table {
+    word-break: 100%;
+    border-collapse: collapse;
+    font-family: "Montserrat", sans-serif;
+}
+
+.admin-upcoming-apo-table th, .admin-upcoming-apo-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-upcoming-apo-table th {
+    background-color: #2E2E2E ;
+    color: white;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+.admin-upcoming-apo-table tr:hover {
+    background-color: #add8e6;
+}
+
+.admin-upcoming-apo-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.admin-upcoming-apo-table td {
+    font-size: 14px;
+}
+
+.admin-apo-table {
+    word-break: 100%;
+    border-collapse: collapse;
+    font-family: "Montserrat", sans-serif;
+}
+
+.admin-apo-table th, .admin-apo-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-apo-table th {
+    background-color: #2E2E2E ;
+    color: white;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+.admin-apo-table tr:hover {
+    background-color: #add8e6;
+}
+
+.admin-apo-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.admin-apo-table td {
+    font-size: 14px;
+}
+
+.button-gap {
+    margin-right: 3px; 
+}
+
+.admin-apo-btn {
+    background-color: #2E2E2E;
+    padding: 2px 3px;
+}

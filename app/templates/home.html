@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Pet Clinic</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="home-parent">
+        <div class="home-page">
+            <div class="sidebar">
+                <!-- Sidebar content (you can include your sidebar HTML here) -->
+            </div>
+            <div class="user-header">
+                <!-- User Header content (you can include your user header HTML here) -->
+            </div>
+        </div>
+
+        <div class="home-middle">
+            <div class="mid-text">
+                <p>Simplify Pet Care, One Appointment at a Time</p>
+            </div>
+            <div class="mid-subtext">
+                <p>
+                    Stay on top of your pet's health and grooming needs effortlessly. <br> 
+                    Organize appointments, reminders, and daily routines, so you can <br>
+                    focus on enjoying time with your furry companions.
+                </p>
+            </div>
+        </div>
+
+        <div class="home-bottom">
+            <div class="bot-text"> 
+                <p>Our Services</p>
+            </div>
+
+            <div class="bot-services">
+                <div>
+                    <img class="services-img" src="{% static 'assets/welcome/Pet grooming.jpg' %}" alt="grm" />
+                </div>
+                <div>
+                    <img class="services-img" src="{% static 'assets/welcome/Pet Vaccination.jpg' %}" alt="vac" />
+                </div>
+                <div>
+                    <img class="services-img" src="{% static 'assets/welcome/pet wellness check up.jpg' %}" alt="wc" />
+                </div>
+                <div>
+                    <img class="services-img" src="{% static 'assets/welcome/Pet Surgeries.jpg' %}" alt="srg" />
+                </div>
+            </div>
+
+            <div class="bot-services-desc">
+                <div class="bot-services-text">
+                    <p>Pet Grooming</p>
+                </div>
+                <div class="bot-services-text">
+                    <p>Pet Vaccination</p>
+                </div>
+                <div class="bot-services-text">
+                    <p>Pet Check-Up</p>
+                </div>
+                <div class="bot-services-text">
+                    <p>Pet Surgery</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

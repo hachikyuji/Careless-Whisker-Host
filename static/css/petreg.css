@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
+
+.register-pet-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    padding: 50px;
+}
+
+.register-pet-content{
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 100px;
+    gap: 20px;
+    font-family: "Montserrat";
+    border:  8px solid black;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.petreg-left-section{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: flex-start;
+}
+
+.petreg-left-section h2{
+    font-size: 25px;
+}
+
+.petreg-right-section {
+    flex: 2;
+}
+
+.petreg-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 15px;
+    align-items: center;
+}
+
+.petreg-logo {
+    width: 200px;
+    height: 200px;
+    padding-top: 80px;
+}
+
+.petreg-logo img {
+    width: 100%;
+    height: auto;
+}
+
+.petreg-dog {
+    height: 80px;
+    width: 80px;
+}
+
+.petreg-form label {
+    font-size: 14px;
+    text-align: left;
+    font-family: "Montserrat";
+    font-weight: 600;
+}
+
+.petreg-form input {
+    padding: 8px;
+    font-size: 12px;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+}
+
+.petreg-form input:focus,
+.petreg-form select:focus {
+    border-color: #443ebc; 
+    outline: none; 
+}
+
+.petreg-form select {
+    font-family: "Montserrat";
+    font-size: 12px;
+    border: 2px solid black;
+}
+
+.petreg-form input:focus {
+    border-color: #443ebc;
+    outline: none;
+}
+
+.petreg-form button {
+    width: 200px;
+    font-family: "Montserrat";
+    font-weight: bold;
+    padding: 5px 5px;
+    margin-left: 360px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px black;
+}
+
+.pet-dropdown select {
+    display: block; 
+    margin-top: 8px; 
+    padding: 8px; 
+    font-size: 12px;
+}

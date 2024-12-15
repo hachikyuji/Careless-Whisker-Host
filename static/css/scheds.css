@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
+
+.ssmodal, .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    padding: 40px 20px;
+    font-family: "Montserrat";
+  }
+  
+  .overlay {
+    background: rgba(49,49,49,0.8);
+  }
+  .ssmodal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+    min-width: 300px;
+    text-align: center;
+  }
+
+.sched-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+  /* background-color: #1a1a1a; */
+}
+
+.sched-page-content {
+  background: white;
+  box-shadow: 0 4px 8px rgba(49,49,49,0.8);
+  padding: 20px 30px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  border-radius: 10px;
+  font-family: "Montserrat";
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.sched-page-content p {
+  font-size: 16px;
+}
+
+.sched-page-content label {
+  font-size: 16px;
+}
+
+.sched-page-content option {
+  font-family: "Montserrat";
+}
+
+.sched-page-content button {
+  font-family: "Montserrat";
+  color: white;
+  background-color: black;
+  padding: 5px 10px;
+  box-shadow: 0 4px 8px rgba(49,49,49,0.8);
+  transition: #f1f1f1 0.3s ease;
+}
+
+.sched-page-content button:hover {
+  background-color: #add8e6;
+}
+
+.sched-page-content select {
+  font-family: "Montserrat";
+}
+
+.sched-page-content h2 {
+  font-size: 25px;
+}
+
+.sched-h2 {
+  font-size: 25px;
+  font-family: "Montserrat";
+  background: black;
+  color: white;
+  display: inline-block;
+  padding-left: 209px;
+  padding-right: 200px;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 2px #f5a623;
+  box-shadow: 0 2px 4px #f1f1f1;
+}
+
+.schedpage-image {
+  width: auto;
+  height: 400px;
+  padding-top: 80px;
+  padding-right: 0px;
+}
+
+.schedpage-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.schedpage-right {
+  margin-top: 70px;
+  flex: 2;
+  text-align: left;
+}
+
+.sched-form input:focus,
+.sched-form select:focus {
+  border-color: 12px solid #443ebc;
+  outline: none;
+  border: 3px solid #443ebc;
+  box-shadow: 9 2px 4px #443ebc;
+}

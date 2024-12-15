@@ -1,0 +1,25 @@
+.home-parent {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-page {
+  background-image: url("../assets/home/homedog.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; 
+}
+
+.home-middle {
+  width: 100%;
+  height: 100%;
+}
+
+.home-bottom {
+  width: 100%;
+  height: 100%;
+  background-color:rgb(248, 248, 232);
+}

@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
+
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.main-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.main-header-center {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.main-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.right-btn {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  padding: 8px 16px !important; /* Reduced padding */
+  font-size: 16px !important;
+  cursor: pointer;
+  font-family: "Montserrat";
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.right-btn:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+.main-header-right button:hover svg {
+  fill: #bbb;
+}
+
+.img-link {
+  text-decoration: none;
+}

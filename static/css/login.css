@@ -1,0 +1,430 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: fit-content;
+  background-color: #000;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  box-sizing: border-box;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header-center {
+  display: flex;
+  justify-content: center;
+
+}
+
+.nav-button {
+  background: none;
+  color: white;
+  border: none;
+  font-size: medium;
+  cursor: pointer;
+  margin: 0 15px;
+  font-family: "Montserrat";
+  transition: color 0.3s ease;
+}
+
+.nav-button:hover {
+  color: #bbb;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.schedule-now-btn {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  padding: 8px 16px !important; 
+  font-size: 16px !important;
+  cursor: pointer;
+  font-family: "Montserrat";
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.schedule-now-btn:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+.btn-log-in-link{
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-family: "Montserrat";
+  font-size: small;
+}
+
+.login-page {
+  background-image: url("../assets/login/bgwithdog.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.login-content {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.login-left {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  flex: 1;
+}
+
+.gold-lab-img {
+  width: 100%;
+  max-height: 400px;
+  height: auto;
+  display: block;
+  margin-top: 200px;
+}
+
+.left-image {
+  margin-right: 20px;
+}
+
+.left-image-text {
+  color: white;
+  font-size: 40px;
+  margin-left: 350px;
+  text-align: center;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-style: bold;
+}
+
+.login-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px 20px;
+  background-color: white;
+  margin-top: -10px;
+}
+
+.form-logo {
+  margin-bottom: 5px;
+  border-radius: 10px;
+  margin-top: 120px;
+}
+
+.logo-top {
+  margin-top: 20px;
+  height: 130px;
+  width: auto;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 5px;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-field {
+  margin-bottom: 10px;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-family: "Montserrat";
+}
+
+.input-field input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.login-submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  font-size: small;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.login-submit:hover {
+  background-color: #555;
+}
+
+.sign-up {
+  text-align: center;
+  padding-bottom: 155px;
+  font-family: "Montserrat";
+  font-size: smaller;
+  padding-top: 10px;
+}
+
+.sign-up-link {
+  color: blue;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.sign-up-link:hover {
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .login-content {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .login-left,
+  .login-right {
+    width: 100%;
+  }
+}
+
+/* Register  CSS */
+
+.register-page {
+  background-image: url("../assets/register/regdogpng.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.log-in {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 65px;
+  font-family: "Montserrat";
+  font-size: smaller;
+
+}
+
+.log-in-link {
+  color: blue;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.log-in-link:hover {
+  color: #555;
+}
+
+
+.profile-btn {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  padding: 2px 4px !important; 
+  font-size: 16px !important;
+  cursor: pointer;
+  font-family: "Montserrat";
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.profile-btn:hover {
+  background-color: #0056b3;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 70%;
+  right: 55px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown-menu button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: white;
+  background-color: black;
+}
+
+.dropdown-menu button svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  fill: white;
+}
+
+.dropdown-menu button:hover {
+  background-color: #777;
+}
+
+.header-notif {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  padding: 1px 2px !important; 
+  font-size: 16px !important;
+  cursor: pointer;
+  font-family: "Montserrat";
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header-notif button {
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 30px;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: white;
+  background-color: black;
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.header-notif button svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 3px;
+  fill: white;
+}
+
+.profile-header-right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.notif-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  color: black;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  z-index: 1000;
+  max-height: auto;
+  max-width: 300px;
+  margin-right: 90px;
+  margin-top: 20px;
+}
+
+.notif-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notif-dropdown li {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.notif-btn-red {
+  background-color: red; 
+  color: white;
+}
+
+.close-notif-btn {
+  background-color: black;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+}
+
+.notif-date-span {
+  font-size: 14px;
+}
+
+.messages-container {
+  margin: 10px 0;
+}
+
+.alert {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}

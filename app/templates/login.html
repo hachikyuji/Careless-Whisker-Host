@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+<div class="login-page">
+    <header class="header">
+        <div class="header-left">
+            <a href="/" class="img-link">
+                <img class="logo" src="{% static 'assets/login/logo.png' %}" alt="Logo">
+            </a>
+        </div>
+        <div class="header-center">
+            <button class="nav-button">Our Mission</button>
+            <button class="nav-button">Team</button>
+            <button class="nav-button">Services</button>
+        </div>
+        <div class="header-right">
+            <button class="schedule-now-btn">
+                <a href="/register" class="btn-log-in-link">Sign Up</a>
+            </button>
+            <button class="schedule-now-btn">
+                <a href="/login" class="btn-log-in-link">Log In</a>
+            </button>
+        </div>
+    </header>
+  
+    <div class="login-content">
+        <div class="login-left">
+            <div class="left-image-text">
+                <p>Because your pet deserves the best!</p>
+            </div>
+        </div>
+  
+        <div class="login-right">
+            <div class="form-logo">
+                <img class="logo-top" src="{% static 'assets/login/logo.png' %}" alt="Logo" />
+            </div>
+
+            {% if messages %}
+                <div class="messages-container">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form action="{% url 'login' %}" method="POST" class="login-form">
+                {% csrf_token %}
+                <div class="input-field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required />
+                </div>
+                <div class="input-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required />
+                </div>
+                <button type="submit" class="login-submit">
+                    Login
+                </button>
+            </form>
+
+            <div class="sign-up">
+                New pet owner? 
+                <a href="/register" class="sign-up-link">
+                    Create an account
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
