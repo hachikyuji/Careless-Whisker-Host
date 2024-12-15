@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
 
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
 .admin-apo-page {
     display: flex;
     flex-direction: column;
@@ -140,3 +145,17 @@
     background-color: #2E2E2E;
     padding: 2px 3px;
 }
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 1em 0;
+  }
+  
+  .messages .success {
+    color: green;
+  }
+  
+  .messages .error {
+    color: red;
+  }

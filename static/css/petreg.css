@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
 
-.register-pet-page{
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.register-pet-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     background-color: black;
-    padding: 50px;
+    margin: 0; 
 }
 
 .register-pet-content{
@@ -121,3 +125,23 @@
     padding: 8px; 
     font-size: 12px;
 }
+
+.messages-container {
+    margin: 10px 0;
+  }
+  
+  .alert {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+  }

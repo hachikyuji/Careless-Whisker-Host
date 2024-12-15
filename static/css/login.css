@@ -428,3 +428,59 @@ body {
   background-color: #f8d7da;
   color: #721c24;
 }
+
+.hidden {
+  display: none;
+}
+
+/* General Modal Styles */
+.modal, .overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1000;
+}
+
+.overlay {
+  background: rgba(49, 49, 49, 0.8);
+  z-index: 1; 
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  font-family: "Montserrat", sans-serif;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 2;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.close-modal-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ff5757;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.close-modal-btn:hover {
+  background-color: #e54444;
+}

@@ -1,6 +1,8 @@
-.home-parent {
-  display: flex;
-  flex-direction: column;
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
+
+html, body {
+  margin: 0;
+  height: 100%;
 }
 
 .home-page {
@@ -10,16 +12,25 @@
   background-repeat: no-repeat;
   height: 100vh;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
+  position: relative; /* Ensure the page content stays above the background */
+}
+
+.home-page .offcanvas {
+  z-index: 1050; /* Ensure the sidebar is above the content */
 }
 
 .home-middle {
   width: 100%;
   height: 100%;
+  position: relative; /* This ensures it doesn't get covered by the background */
+  z-index: 1; /* Ensure the middle content stays above the background */
 }
 
 .home-bottom {
   width: 100%;
   height: 100%;
-  background-color:rgb(248, 248, 232);
+  background-color: rgb(248, 248, 232);
+  position: relative; /* Ensure it doesn’t get covered by the background */
+  z-index: 1; /* Ensure the bottom section stays above the background */
 }

@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule a Service</title>
+    <link rel="stylesheet" href="{% static 'css/scheds.css' %}">
+</head>
+<body>
+    <div class="sched-page">
+        
+        <div class="sched-h2">
+            <h2>Schedule a Service</h2>
+        </div>
+        
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <div class="sched-page-content">
+            <div class="schedpage-left">
+                <div class="sched-left-content">
+                    <img class="schedpage-image" src="{% static 'assets/scheds/scheddog.png' %}" alt="dog">
+                </div>
+            </div>
+            
+            <div class="schedpage-right">
+
+                <form class="sched-form" method="POST" action="{% url 'schedule_service' %}">
+                    {% csrf_token %}
+                    <br/><br/>
+                    <label for="pet-dropdown"><strong>Select a Pet: <br /></strong></label>
+                    <select id="pet-dropdown" name="pet_name" required>
+                        <option value="">-- Select a Pet --</option>
+                        {% for pet in pets %}
+                            <option value="{{ pet.pet_name }}">{{ pet.pet_name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label for="service"><strong><br /><br/> Select a Service: <br/></strong></label>
+                    <select id="service" name="service" required>
+                        <option value="">-- Select a Service --</option>
+                        <option value="Grooming" title="Professional grooming for your pet, lasting about 1 hour.">
+                            Pet Grooming
+                        </option>
+                        <option value="Vaccination" title="Vaccination services to protect your pet, approximately 30 minutes.">
+                            Pet Vaccination
+                        </option>
+                        <option value="Check-Up" title="General health check-up for your pet, around 30 minutes.">
+                            Pet Check-Up
+                        </option>
+                        <option value="Surgery" title="Specialized surgical procedures, schedule based on your doctor's suggestions.">
+                            Pet Surgery
+                        </option>
+                    </select>
+
+                    <label for="date"><strong><br /><br/>Select a Date: </strong></label>
+                        <input type="date" id="scheduled_date" name="scheduled_date" required />
+
+                    <label for="time"><strong><br/><br/>Select a Time: </strong></label>
+                        <input type="time" id="scheduled_time" name="scheduled_time" required />
+                    <div class="loading-container">
+                        <!-- Placeholder for potential loading animation or messages -->
+                    </div>
+
+
+                    
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for selecting the date -->
+    <div class="modal" id="dateModal">
+        <div class="overlay" onclick="closeDateModal()"></div>
+        <div class="modal-content">
+            <h2>Choose an Appropriate Time</h2>
+            <p>Please select a suitable time for the service. <br /><strong> Mon-Fri 8 AM - 5 PM <strong></p>
+            <button onclick="closeDateModal()">Proceed</button>
+            <a href="/home">
+                <button>Go Back</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal for selecting the time -->
+
+    <script>
+        function storeDate() {
+            var selectedDate = document.getElementById("scheduled_date").value;
+            if (selectedDate) {
+                // Set the hidden input field with the selected date
+                document.getElementById("hidden_scheduled_date").value = selectedDate;
+        
+                // Update the span with the selected date for display
+                document.getElementById("hidden_scheduled_date").textContent = selectedDate;
+        
+                // Close the date modal
+                closeDateModal();
+        
+                // Show the time modal
+                document.getElementById("timeModal").style.display = "block";
+            } else {
+                alert("Please select a date.");
+            }
+        }
+        
+        function storeTime() {
+            var selectedTime = document.getElementById("scheduled_time").value;
+            if (selectedTime) {
+                // Set the hidden input field with the selected time
+                document.getElementById("hidden_scheduled_time").value = selectedTime;
+        
+                // Update the span with the selected time for display
+                document.getElementById("hidden_scheduled_time").textContent = selectedTime;
+        
+                // Close the time modal
+                closeTimeModal();
+            } else {
+                alert("Please select a time.");
+            }
+        }
+        
+        // Close the date modal
+        function closeDateModal() {
+            document.getElementById("dateModal").style.display = "none";
+        }
+        
+        // Close the time modal
+        function closeTimeModal() {
+            document.getElementById("timeModal").style.display = "none";
+        }
+        
+        // Show the date modal on page load
+        window.onload = function() {
+            document.getElementById("dateModal").style.display = "block";
+        };
+        
+    </script>
+</body>
+</html>

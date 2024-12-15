@@ -1,0 +1,36 @@
+<!-- Notifications Modal -->
+<div id="notif-modal" class="modal hidden">
+    <div class="overlay"></div>
+    <div class="modal-content">
+        <h2>Notifications</h2>
+        <ul>
+            {% for notif in notifications %}
+                <li class="{{ 'read' if notif.read else 'unread' }}">
+                    <h4>{{ notif.title }}</h4>
+                    <p>{{ notif.message }}</p>
+                    <span>{{ notif.created_at|date:"F j, Y, g:i a" }}</span>
+                </li>
+            {% empty %}
+                <li>No new notifications</li>
+            {% endfor %}
+        </ul>
+        <button id="close-notif-btn">Close</button>
+    </div>
+</div>
+
+<!-- Profile Modal -->
+<div id="profile-modal" class="modal hidden">
+    <div class="overlay"></div>
+    <div class="modal-content">
+        <h2>User Profile</h2>
+        {% if profile %}
+            <p><strong>Name:</strong> {{ user.profile.first_name }} {{ profile.last_name }}</p>
+            <p><strong>Email:</strong> {{ profile.email }}</p>
+            <p><strong>Mobile No.:</strong> {{ profile.mobile_no }}</p>
+            <p><strong>Onboarding Status:</strong> {{ profile.onboarding_complete|yesno:"Finished,Not Finished" }}</p>
+        {% else %}
+            <p>Unable to fetch user profile. Please try again later.</p>
+        {% endif %}
+
+    </div>
+</div>

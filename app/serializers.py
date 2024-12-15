@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import serializers
+from .models import Notifications
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -30,3 +31,7 @@ class LoginSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Invalid credentials")
         return user
     
+class NotificationSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = Notifications
+        fields = ['id', 'title', 'message', 'created_at', 'read', 'notif_type']

@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+</head>
+<body>
+    <div class="sidebar-container" id="sidebar">
+        <div class="sidebar" id="sidebarContent">
+          <button class="close-btn" id="toggleButton">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 700 960" width="20px" fill="#e8eaed" id="toggleIcon">
+              <path id="togglePath" d="M288-88.35 212.35-164l316-316-316-316L288-871.65 679.65-480 288-88.35Z"/>
+            </svg>
+          </button>
+      
+          <nav class="sidebar-links">
+            <div>
+              <a href="/home">
+                <img class="sidebar-logo" src="{% static 'assets/login/logo.png' %}" alt="Logo" />
+              </a>
+            </div>
+            <ul>
+              <li><a href="/pet-registration">Register a Pet</a></li>
+              <li><a href="/user-pets">Registered Pets</a></li>
+              <li><a href="/schedule-services">Schedule a Service</a></li>
+              <li>
+                <button id="dropdownButton" class="sb-dropdown-btn">
+                  Appointments
+                </button>
+                <ul id="dropdownMenu" class="sb-dropdown" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+                  <li class="dd-li"><a href="/scheduled-appointments">Pending Appointments</a></li>
+                  <li class="dd-li"><a href="/upcoming-appointments">Upcoming Appointments</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+      </div>
+      
+
+  <script>
+    let isSidebarOpen = false;
+    let isDropdownOpen = false;
+
+    // Toggle sidebar open and close
+    document.getElementById('toggleButton').addEventListener('click', function() {
+      isSidebarOpen = !isSidebarOpen;
+    
+      // Toggle sidebar visibility
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open', isSidebarOpen);
+      
+      // Toggle the overlay visibility
+      const overlay = document.getElementById('sidebarOverlay');
+      overlay.classList.toggle('active', isSidebarOpen);
+    
+      // Change icon depending on sidebar state
+      const toggleIcon = document.getElementById('toggleIcon');
+      const togglePath = toggleIcon.querySelector('path');
+      if (isSidebarOpen) {
+        togglePath.setAttribute('d', 'M288-88.35 212.35-164l316-316-316-316L288-871.65 679.65-480 288-88.35Z'); // Close icon
+      } else {
+        togglePath.setAttribute('d', 'M288-71.65L212.35-147 528-463 212.35-779 288-855 528-625z'); // Open icon
+      }
+    });
+    
+    // Handle dropdown toggle
+    document.getElementById('dropdownButton').addEventListener('click', function() {
+      isDropdownOpen = !isDropdownOpen;
+      document.getElementById('dropdownMenu').style.maxHeight = isDropdownOpen ? '300px' : '0';
+    });
+    
+    // Sidebar close function (for overlay click)
+    function toggleSidebar() {
+      if (isSidebarOpen) {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('active');
+        isSidebarOpen = false;
+      }
+    }
+  </script>
+</html>

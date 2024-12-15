@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Pets</title>
+    <link rel="stylesheet" href="{% static 'css/userpets.css' %}">
+</head>
+<body>
+    <div class="userpets-page">
+        <div class="pc-main-text">
+            <p>Registered Pets</p>
+        </div>
+
+        {% if pets %}
+            {% for pet in pets %}
+                <div class="pet-card">
+                    <div class="pet-card-left">
+                        <p><strong>{{ pet.pet_name }}</strong></p>
+                        <img
+                            class="pet-card-placeholder"
+                            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-542207-jpeg.png"
+                            alt="placeholder-image"
+                        />
+                    </div>
+                    <div class="pet-card-right">
+                        <p><strong>Type:</strong> {{ pet.pet_type }}</p>
+                        <p><strong>Breed:</strong> {{ pet.pet_breed }}</p>
+                        <p><strong>Sex:</strong> {{ pet.pet_sex }}</p>
+                        <p><strong>Age:</strong> {{ pet.pet_age }}</p>
+                        <p><strong>Birthday:</strong> {{ pet.pet_birthday }}</p>
+                        <p><strong>Condition:</strong> {{ pet.pet_condition }}</p>
+                        <p><strong>Health:</strong> {{ pet.pet_health }}</p>
+                        <p><strong>Weight:</strong> {{ pet.pet_weight }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-pets">
+                <h2>No Pets Registered</h2>
+                <p>It seems you haven’t registered any pets yet. Please add a pet <a href="{% url 'pet_registration' %}">here</a> to get started!</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Registration</title>
+    <link rel="stylesheet" href="{% static 'css/petreg.css' %}">
+    <link rel="stylesheet" href="{% static 'css/onboarding.css' %}">
+</head>
+<body>
+    <div class="register-pet-page">
+        <div class="sidebar">
+            <!-- Sidebar content can go here -->
+        </div>
+        
+        <div class="register-pet-content">
+            <div class="petreg-left-section">
+                <div class="petreg-logo">
+                    <img class="onboarding-logo-top" src="{% static 'assets/login/logo.png' %}" alt="Logo" />
+                </div>
+                <h2>Register your pet to avail to our services!</h2>
+            </div>
+
+            {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+    
+            <div class="petreg-right-section">
+                <form class="petreg-form" method="POST" action="{% url 'pet_registration' %}">
+                    {% csrf_token %}
+                    
+                    <div>
+                        <label for="pet_name">Pet Name:</label>
+                        <input type="text" name="pet_name" id="pet_name" required />
+                    </div>
+                    
+                    <div class="pet-dropdown">
+                        <label for="pet_type">Pet Type:</label>
+                        <select name="pet_type" id="pet_type" required>
+                            <option value="">Select Pet Type</option>
+                            <option value="Dog">Dog</option>
+                            <option value="Cat">Cat</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="pet_breed">Pet Breed:</label>
+                        <input type="text" name="pet_breed" id="pet_breed" required />
+                    </div>
+                    
+                    <div class="pet-dropdown">
+                        <label for="pet_sex">Pet Sex:</label>
+                        <select name="pet_sex" id="pet_sex" required>
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="">Choose an option for your pet.</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="pet_age">Pet Age:</label>
+                        <input type="text" name="pet_age" id="pet_age" />
+                    </div>
+                    
+                    <div>
+                        <label for="pet_birthday">Pet Birthday:</label>
+                        <input type="date" name="pet_birthday" id="pet_birthday" />
+                    </div>
+                    
+                    <div>
+                        <label for="pet_condition">Pet Condition:</label>
+                        <input type="text" name="pet_condition" id="pet_condition" />
+                    </div>
+                    
+                    <div>
+                        <label for="pet_weight">Pet Weight: (kg)</label>
+                        <input type="number" name="pet_weight" id="pet_weight" />
+                    </div>
+                    
+                    <button type="submit">
+                        Register Pet
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

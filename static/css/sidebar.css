@@ -91,26 +91,29 @@
   /* OPEN SIDEBAR*/
 
   .sidebar-overlay {
-    display: none;
-  }
-  
-
-  .sidebar-overlay.active {
-    display: block;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999; /* Behind sidebar */
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 998;
+  }
+  
+  .sidebar-overlay.active {
+    opacity: 1; /* Show overlay when sidebar is open */
   }
 
   .sidebar-logo {
-    margin-bottom: 1px;
-    border-radius: 10px;
-    margin-top: 90px;
+    width: 100%; /* Ensures the container takes up the full width of the sidebar */
+    max-width: 200px; /* Limits the logo's width */
+    height: auto; /* Ensures logo maintains its aspect ratio */
+    margin: 0 auto 20px; /* Centers the logo horizontally with some bottom margin */
+    display: block;
   }
+
 
 .sb-dropdown{
   list-style-type: none;
