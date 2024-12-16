@@ -1,0 +1,128 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile List</title>
+    <link rel="stylesheet" href="{% static 'css/adminprof.css' %}">
+</head>
+<body>
+
+<div class="admin-profiles-page">
+    <div class="admin-profiles-main-text">
+        <p>Update Profile Details</p>
+    </div>
+    <div class="admin-profiles-content">
+        {% if profiles %}
+        <div class="admin-profiles-table-container">
+            <table class="admin-profiles-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Email</th>
+                        <th>First Name</th>
+                        <th>Middle Initial</th>
+                        <th>Last Name</th>
+                        <th>Mobile No</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for profile in profiles %}
+                    <tr class="clickable-row" data-id="{{ profile.id }}"
+                        data-email="{{ profile.email }}" data-first-name="{{ profile.first_name }}"
+                        data-middle-initial="{{ profile.middle_initial }}" data-last-name="{{ profile.last_name }}"
+                        data-mobile-no="{{ profile.mobile_no }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ profile.email }}</td>
+                        <td>{{ profile.first_name }}</td>
+                        <td>{{ profile.middle_initial }}</td>
+                        <td>{{ profile.last_name }}</td>
+                        <td>{{ profile.mobile_no }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="admin-profiles-no-appointments">
+            <h2>No Profiles Registered</h2>
+            <p>There are currently no profiles registered.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Modal for Updating Profile -->
+<div id="updateProfileModal" class="modal" style="display:none;">
+    <div class="admin-profiles-modal-content">
+        <h2>Update Profile: <span id="profileName"></span></h2>
+        <form method="POST" id="updateProfileForm">
+            {% csrf_token %}
+            <label>
+                Email:
+                <input type="email" name="email" id="email" required>
+            </label>
+            <label>
+                First Name:
+                <input type="text" name="first_name" id="first_name" required>
+            </label>
+            <label>
+                Middle Initial:
+                <input type="text" name="middle_initial" id="middle_initial" required>
+            </label>
+            <label>
+                Last Name:
+                <input type="text" name="last_name" id="last_name" required>
+            </label>
+            <label>
+                Mobile Number:
+                <input type="text" name="mobile_no" id="mobile_no" required>
+            </label>
+            <div class="modal-actions">
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeModal()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // JavaScript to handle row click, populate modal and submit form
+
+    // Add click event listeners to the rows in the profile table
+    document.querySelectorAll('.clickable-row').forEach(row => {
+        row.addEventListener('click', function () {
+            // Capture profile data from the clicked row
+            const profileId = this.getAttribute('data-id');
+            const profileEmail = this.getAttribute('data-email');
+            const profileFirstName = this.getAttribute('data-first-name');
+            const profileMiddleInitial = this.getAttribute('data-middle-initial');
+            const profileLastName = this.getAttribute('data-last-name');
+            const profileMobileNo = this.getAttribute('data-mobile-no');
+
+            // Populate modal form with the profile data
+            document.getElementById('profileName').textContent = profileFirstName + ' ' + profileLastName;
+            document.getElementById('email').value = profileEmail;
+            document.getElementById('first_name').value = profileFirstName;
+            document.getElementById('middle_initial').value = profileMiddleInitial;
+            document.getElementById('last_name').value = profileLastName;
+            document.getElementById('mobile_no').value = profileMobileNo;
+
+            // Update the form action to the URL for updating this profile
+            document.getElementById('updateProfileForm').action = `/profiles/update/${profileId}/`;
+
+            // Show the modal
+            document.getElementById('updateProfileModal').style.display = 'block';
+        });
+    });
+
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById('updateProfileModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

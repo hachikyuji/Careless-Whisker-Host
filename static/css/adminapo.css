@@ -64,6 +64,17 @@ html, body {
     margin-left: 550px;
 }
 
+.admin-pending-table-container {
+    width: 100%;
+    max-width: 815px;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-left: 550px;
+}
+
 .admin-upcoming-apo-table-container {
     width: 100%;
     max-width: 812px;
@@ -146,16 +157,28 @@ html, body {
     padding: 2px 3px;
 }
 
-.messages {
+/* General styles for messages container */
+.messages-container {
     list-style-type: none;
     padding: 0;
     margin: 1em 0;
-  }
-  
-  .messages .success {
-    color: green;
-  }
-  
-  .messages .error {
-    color: red;
-  }
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.alert-success {
+    background-color: #28a745; /* Green for success */
+}
+
+.alert-error {
+    background-color: #dc3545; /* Red for error */
+}
+
+.alert-info {
+    background-color: #17a2b8; /* Blue for info */
+}

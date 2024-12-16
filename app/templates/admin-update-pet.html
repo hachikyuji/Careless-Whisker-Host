@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet List</title>
+    <link rel="stylesheet" href="{% static 'css/adminregpets.css' %}">
+</head>
+<body>
+
+<div class="admin-pets-page">
+    <div class="admin-pets-main-text">
+        <p>Pet Details</p>
+    </div>
+    <div class="admin-pets-content">
+        {% if pets %}
+        <div class="admin-pets-table-container">
+            <table class="admin-pets-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Breed</th>
+                        <th>Sex</th>
+                        <th>Age</th>
+                        <th>Birthday</th>
+                        <th>Kg</th>
+                        <th>Cond.</th>
+                        <th>Health</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pet in pets %}
+                    <tr class="clickable-row" data-id="{{ pet.id }}"
+                        data-name="{{ pet.pet_name }}" data-type="{{ pet.pet_type }}"
+                        data-breed="{{ pet.pet_breed }}" data-sex="{{ pet.pet_sex }}"
+                        data-age="{{ pet.pet_age }}" data-birthday="{{ pet.pet_birthday }}"
+                        data-weight="{{ pet.pet_weight }}" data-condition="{{ pet.pet_condition }}"
+                        data-health="{{ pet.pet_health }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ pet.pet_name }}</td>
+                        <td>{{ pet.pet_type }}</td>
+                        <td>{{ pet.pet_breed }}</td>
+                        <td>{{ pet.pet_sex }}</td>
+                        <td>{{ pet.pet_age }}</td>
+                        <td>{{ pet.pet_birthday }}</td>
+                        <td>{{ pet.pet_weight }}</td>
+                        <td>{{ pet.pet_condition }}</td>
+                        <td>{{ pet.pet_health }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="admin-pets-no-appointments">
+            <h2>No Pets Registered</h2>
+            <p>There are currently no pets registered.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Modal for updating pet details -->
+<div id="updatePetModal" class="modal" style="display:none;">
+    <div class="admin-pets-modal-content">
+        <h2>Update Pet Details</h2>
+        <form method="POST" id="updatePetForm" action="">
+            {% csrf_token %}
+            <label>
+                Pet Weight:
+                <input type="text" name="pet_weight" id="pet_weight" required>
+            </label>
+            <label>
+                Pet Condition:
+                <input type="text" name="pet_condition" id="pet_condition" required>
+            </label>
+            <label>
+                Pet Health:
+                <input type="text" name="pet_health" id="pet_health" required>
+            </label>
+            <label>
+                Pet Name:
+                <input type="text" name="pet_name" id="pet_name" required>
+            </label>
+            <label>
+                Pet Type:
+                <input type="text" name="pet_type" id="pet_type" required>
+            </label>
+            <label>
+                Pet Breed:
+                <input type="text" name="pet_breed" id="pet_breed" required>
+            </label>
+            <label>
+                Pet Sex:
+                <input type="text" name="pet_sex" id="pet_sex" required>
+            </label>
+            <label>
+                Pet Birthday:
+                <input type="date" name="pet_birthday" id="pet_birthday">
+            </label>
+            <div class="modal-actions">
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeModal()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// JavaScript for handling modal display
+document.querySelectorAll('.clickable-row').forEach(row => {
+    row.addEventListener('click', function () {
+        const petId = this.getAttribute('data-id');
+        const petName = this.getAttribute('data-name');
+        const petType = this.getAttribute('data-type');
+        const petBreed = this.getAttribute('data-breed');
+        const petSex = this.getAttribute('data-sex');
+        const petAge = this.getAttribute('data-age');
+        const petBirthday = this.getAttribute('data-birthday');
+        const petWeight = this.getAttribute('data-weight');
+        const petCondition = this.getAttribute('data-condition');
+        const petHealth = this.getAttribute('data-health');
+
+        // Set values in the modal form
+        document.getElementById('pet_name').value = petName;
+        document.getElementById('pet_type').value = petType;
+        document.getElementById('pet_breed').value = petBreed;
+        document.getElementById('pet_sex').value = petSex;
+        document.getElementById('pet_birthday').value = petBirthday;
+        document.getElementById('pet_weight').value = petWeight;
+        document.getElementById('pet_condition').value = petCondition;
+        document.getElementById('pet_health').value = petHealth;
+
+        // Change form action to update the pet
+        document.getElementById('updatePetForm').action = `/pets/update/${petId}/`;
+
+        // Show modal
+        document.getElementById('updatePetModal').style.display = 'block';
+    });
+});
+
+// Close modal function
+function closeModal() {
+    document.getElementById('updatePetModal').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

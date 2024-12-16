@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from .forms import PetForm, ProfileForm
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -25,7 +26,12 @@ def login(request):
             user = serializer.validated_data
             auth_login(request, user)
             messages.success(request, "Login successful!")
-            return redirect('home')
+            if user.profile.account_type == 'admin':
+                return redirect('admin-home')
+            elif user.profile.account_type =='client':
+                return redirect('home')
+            else:
+                messages.error(request, "Invalid account type!")
         messages.error(request, "Invalid credentials")
     
     return render(request, 'login.html')
@@ -37,7 +43,12 @@ class LoginView(APIView):
             user = serializer.validated_data
             auth_login(request, user)
             messages.success(request, "Login successful!")
-            return redirect('home')
+            if user.account_type == 'admin':
+                return redirect('admin-home')
+            elif user.account_type =='client':
+                return redirect('home')
+            else:
+                messages.error(request, "Invalid account type!")
         return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
 def register(request):
@@ -65,7 +76,10 @@ class UserRegistrationView(APIView):
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            Profile.objects.create(user=user)
+            
+            account_type = 'admin' if user.username == 'admin' else 'client'
+             
+            Profile.objects.create(user=user, account_type=account_type)
             
             messages.success(request, 'Account created successfully! You can now log in.')
             
@@ -89,14 +103,12 @@ def home(request):
 
 def mark_notifications_as_read(request):
     if request.user.is_authenticated:
-        # Mark all unread notifications as read
+
         unread_notifications = Notifications.objects.filter(user=request.user, read=False, notif_type__isnull=True)
         updated_count = unread_notifications.update(read=True)
 
-        # Get the updated list of notifications
         updated_notifications = Notifications.objects.filter(user=request.user, notif_type__isnull=True)
 
-        # Serialize notifications to return the data
         notifications_data = [
             {
                 'id': notif.id,
@@ -175,7 +187,6 @@ def schedule_service(request):
         
         print(f"Pet Name: {pet_name}, Service: {service}")
         
-        # Validate form input
         if not pet_name :
             messages.error(request, 'Please select a pet.')
         elif not service:
@@ -188,25 +199,23 @@ def schedule_service(request):
             messages.error(request, 'Please select a time.')
 
         else:
-            # Check if the selected pet exists for this user
             pet = pets.filter(pet_name=pet_name).first()
             if not pet:
                 messages.error(request, 'The selected pet does not exist.')
             else:
-                # Save the scheduled service
                 ScheduledServices.objects.create(
                     user=request.user,
                     pet_name=pet_name,
                     service=service,
-                    scheduled_date=scheduled_date,  # Save the selected date
-                    scheduled_time=scheduled_time,  # Save the selected time
+                    scheduled_date=scheduled_date, 
+                    scheduled_time=scheduled_time,  
                 )
                 messages.success(request, 'Service successfully scheduled!')
-                return redirect('schedule_service')  # Redirect to avoid form resubmission
+                return redirect('schedule_service') 
     
     return render(request, 'scheduleservice.html', {'pets': pets})
 
-
+@login_required
 def scheduled_services(request):
     if request.user.is_authenticated:
         appointments = ScheduledServices.objects.filter(user=request.user, status=False)
@@ -215,25 +224,121 @@ def scheduled_services(request):
 
     return render(request, 'user-scheduled-services.html', {'appointments': appointments})
 
+@login_required
 def upcoming_services(request):
     if request.user.is_authenticated:
-        # Get the scheduled services that are approved (status=True) and not cancelled (cancelled=False)
         appointments = ScheduledServices.objects.filter(user=request.user, status=True, cancelled=False)
     else:
         appointments = []
 
     return render(request, 'user-upcoming-services.html', {'appointments': appointments})
 
+@login_required
 def cancel_appointment(request, appointment_id):
     if request.method == 'POST' and request.user.is_authenticated:
-        # Get the appointment based on the provided ID
         appointment = get_object_or_404(ScheduledServices, id=appointment_id, user=request.user, status=True, cancelled=False)
 
-        # Update the appointment's cancelled status to True
         appointment.cancelled = True
         appointment.save()
 
-        # Optionally, you can add a success message here
         messages.success(request, 'Your appointment has been cancelled successfully.')
 
     return redirect('upcoming_services')
+
+# Admin Views
+@login_required
+def admin_home(request):
+    return render (request, 'admin-home.html')
+
+@login_required
+def accept_appointment(request, appointment_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        appointment = get_object_or_404(ScheduledServices, id=appointment_id, status=False, cancelled=False)
+        appointment.status = True
+        appointment.save()
+
+        messages.success(request, 'Appointment has been accepted successfully.')
+    return redirect('pending-appointments')
+
+@login_required
+def reject_appointment(request, appointment_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        appointment = get_object_or_404(ScheduledServices, id=appointment_id, status=False, cancelled=False)
+        appointment.status = None
+        appointment.save()
+
+        messages.success(request, 'Appointment has been rejected successfully.')
+    return redirect('pending-appointments')
+
+@login_required
+def admin_pending_appointments_view(request):
+    if request.user.is_authenticated:
+        pending_appointments = ScheduledServices.objects.filter(status=False, cancelled=False)
+    else:
+        pending_appointments = []
+    
+    print(pending_appointments)
+            
+    return render(request, 'admin-pending-appointments.html', {
+        'pending_appointments': pending_appointments,
+    })
+    
+@login_required   
+def admin_upcoming_appointments_view(request):
+    if request.user.is_authenticated:
+        appointments = ScheduledServices.objects.filter(status=True, finished=False)
+    else:
+        appointments = []
+    return render(request, 'admin-upcoming-appointments.html', {'appointments': appointments})
+
+def pet_list(request):
+    pets = Pets.objects.all()
+    
+    return render(request, 'admin-update-pet.html', {'pets': pets})
+
+def update_pet(request, pet_id):
+    pet = get_object_or_404(Pets, id=pet_id)
+    
+    if request.method == 'POST':
+        form = PetForm(request.POST, instance=pet)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_pets')
+    else:
+        form = PetForm(instance=pet)
+
+    return render(request, 'admin-update-pet.html', {'form': form, 'pet': pet})
+
+
+def profile_list(request):
+    profiles = Profile.objects.all()
+    return render(request, 'admin-update-profile.html', {'profiles': profiles})
+
+def update_profile(request, profile_id):
+    profile = get_object_or_404(Profile, id=profile_id)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_profiles')  # Redirect after saving
+    else:
+        form = ProfileForm(instance=profile)
+    
+    return render(request, 'admin-update-profile.html', {'form': form, 'profile': profile})
+
+def unfinished_appointments(request):
+    if request.user.is_authenticated:
+        appointments = ScheduledServices.objects.filter(status=True, finished=False, cancelled=False)
+    else:
+        appointments = []
+        
+    return render(request, 'admin-unfinished-appointments.html', {'appointments': appointments})
+
+def pet_details(request, pet_id):
+    pet = get_object_or_404(Pets, id=pet_id)
+    pet_data = {
+        'pet_weight': pet.pet_weight,
+        'pet_condition': pet.pet_condition,
+        'pet_health': pet.pet_health
+    }
+    return JsonResponse(pet_data)
