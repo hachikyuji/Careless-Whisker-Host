@@ -10,11 +10,6 @@
 </head>
 <body>
     <div class="admin-apo-page">
-        <!-- Assuming you have a sidebar included as a separate template or you can hardcode the sidebar here -->
-        <div class="admin-apo-sidebar">
-            <!-- Sidebar content here -->
-        </div>
-
         <div class="admin-upcoming-apo-main-text">
             <p>Unfinished Appointments</p>
         </div>
@@ -36,7 +31,10 @@
                         </thead>
                         <tbody>
                             {% for appointment in appointments %}
-                                <tr>
+                                <tr class="clickable-row" 
+                                    data-id="{{ appointment.id }}" 
+                                    data-pet-name="{{ appointment.pet_name }}" 
+                                    data-service="{{ appointment.service }}">
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ appointment.pet_name }}</td>
                                     <td>{{ appointment.service }}</td>
@@ -64,32 +62,49 @@
         </div>
     </div>
 
-    <div id="updatePetModal" class="modal" style="display:none;">
-        <div class="admin-pets-modal-content">
-            <h2>Update Pet Details</h2>
-            <form method="POST" id="updatePetForm" action="">
+    <div id="updateAppointmentModal" class="modal" style="display:none;">
+        <!-- Overlay for Modal -->
+        <div id="modal-overlay" class="overlay" style="display:none;"></div>
+        
+        <div class="modal-content">
+            <h2>Update Appointment Status</h2>
+            <p><strong>Pet Name:</strong> <span id="modal-pet-name"></span></p>
+            <p><strong>Service:</strong> <span id="modal-service"></span></p>
+            <form method="POST" id="updateAppointmentForm" action="">
                 {% csrf_token %}
-                <label>
-                    Pet Weight:
-                    <input type="text" name="pet_weight" id="pet_weight" required>
-                </label>
-                <label>
-                    Pet Condition:
-                    <input type="text" name="pet_condition" id="pet_condition" required>
-                </label>
-                <label>
-                    Pet Health:
-                    <input type="text" name="pet_health" id="pet_health" required>
-                </label>
+                <input type="hidden" name="appointment_id" id="appointment_id">
                 <div class="modal-actions">
-                    <button type="submit">Save</button>
+                    <button type="submit">Mark as Finished</button>
                     <button type="button" onclick="closeModal()">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 
-    
 
+    <script>
+        document.querySelectorAll('.clickable-row').forEach(row => {
+            row.addEventListener('click', function () {
+                const appointmentId = row.getAttribute('data-id');
+                const petName = row.getAttribute('data-pet-name');
+                const service = row.getAttribute('data-service');
+        
+                // Set modal values
+                document.getElementById('modal-pet-name').textContent = petName;
+                document.getElementById('modal-service').textContent = service;
+        
+                // Set the hidden input field value for appointment_id
+                document.getElementById('appointment_id').value = appointmentId;
+        
+                // Set the form's action URL dynamically
+                const form = document.getElementById('updateAppointmentForm');
+                form.action = `/appointments/update-status/${appointmentId}/`; // Dynamically set the action URL
+        
+                // Show modal and overlay
+                document.getElementById('updateAppointmentModal').style.display = 'block';
+                document.getElementById('modal-overlay').style.display = 'block'; // Show the overlay
+            });
+        });              
+    </script>
 </body>
 </html>

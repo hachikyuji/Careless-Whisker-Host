@@ -1,0 +1,86 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile</title>
+    <link rel="stylesheet" href="{% static 'css/onboarding.css' %}">
+    <link rel="stylesheet" href="{% static 'css/LoadingIndicator.css' %}">
+</head>
+<body>
+    <div class="onboarding-page">
+        <!-- Sidebar (ensure you add the sidebar HTML content here or import it) -->
+        <div class="onboarding-content">
+
+            <form class="onboarding-form" method="POST" action="{% url 'onboarding' %}">
+                {% csrf_token %}
+                <span> Onboarding Profile </span>
+                <label for="first_name">First Name</label>
+                <input
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    required
+                />
+                
+                <label for="last_name">Last Name</label>
+                <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    required
+                />
+                
+                <label for="middle_initial">Middle Initial (Optional)</label>
+                <input
+                    type="text"
+                    id="middle_initial"
+                    name="middle_initial"
+                />
+                
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                />
+                
+                <label for="mobile_no">Mobile Number (Optional)</label>
+                <input
+                    type="text"
+                    id="mobile_no"
+                    name="mobile_no"
+                />
+
+                <div class="loading-container hidden">
+                    <div class="loader"></div> <!-- Spinner element -->
+                </div>
+          
+                <button type="submit" class="onboarding-button" id="submit-btn">
+                    Submit
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            const submitButton = document.getElementById("submit-btn");
+            const loadingContainer = document.querySelector("loading-container"); 
+        
+            event.preventDefault();
+        
+            submitButton.disabled = true;
+            loadingContainer.classList.remove("hidden");  
+
+            setTimeout(() => {
+                event.target.submit();  // Submit the form to the backend
+            }, 2000);  // 2-second delay
+        });        
+    </script>
+</body>
+</html>

@@ -33,6 +33,7 @@ urlpatterns = [
     # Admin Registered Pets
     path('pets/', views.pet_list, name='admin_pets'),
     path('pets/update/<int:pet_id>/', views.update_pet, name='update_pet'),
+    path('pets/details/<int:pet_id>/', views.pet_details, name='pet_details'),
     
     # Admin Profiles
     path('profiles/', views.profile_list, name='admin_profiles'),
@@ -40,5 +41,9 @@ urlpatterns = [
     
     #Admin Unfinished Appointments
     path('unfinished-appointments/', views.unfinished_appointments, name='unfinished-appointments'),
-    path('pets/details/<int:pet_id>/', views.pet_details, name='pet_details'),
+    path('appointments/update-status/<int:appointment_id>/', views.update_appointment_status, name='update_appointment_status'),
+    
+    #Onboarding
+    path('getting-started/', views.getting_started, name='getting-started'),
+    path('onboarding/', views.onboarding, name='onboarding'),
 ]

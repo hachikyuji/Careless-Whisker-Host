@@ -31,6 +31,7 @@
     justify-content: center;
     align-items: center;
     margin: 10px 0;
+    margin-top: 20px;
   }
 
 .getting-started-page {
@@ -187,6 +188,10 @@ body.active-modal {
   color: #333;
 }
 
+.hidden {
+  display: none;
+}
+
 /* Onboarding Page */
 
 .onboarding-page {
@@ -213,7 +218,7 @@ body.active-modal {
   height: auto; 
   margin: 0 auto;
   padding-bottom: 5px;
-  margin-top: -100px;
+  margin-top: -200px;
 }
 
 .onboarding-form {
@@ -261,7 +266,7 @@ body.active-modal {
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: auto;
-  margin-top: -25px;
+  margin-top: 10px;
 }
 
 button:hover {
@@ -271,6 +276,13 @@ button:hover {
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+span {
+  font-size: 20px;
+  font-family: "Montserrat";
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 

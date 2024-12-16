@@ -72,15 +72,6 @@
                     </table>
                 </div>
             {% else %}
-            {% if messages %}
-            <div class="messages-container">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            </div>
-            {% endif %}
                 <div class="admin-apo-no-appointments">
                     <h2>No Scheduled Services</h2>
                     <p>There are currently no scheduled appointments.</p>

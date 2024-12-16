@@ -95,7 +95,7 @@ def logoutView(request):
 @login_required
 def home(request):
     if request.user.is_authenticated:
-        notifications = Notifications.objects.filter(user=request.user, read=False, notif_type__isnull=True)
+        notifications = Notifications.objects.filter(user=request.user, read=False, notif_type="client")
     else:
         notifications = []
 
@@ -240,6 +240,15 @@ def cancel_appointment(request, appointment_id):
 
         appointment.cancelled = True
         appointment.save()
+        
+        profile = get_object_or_404(Profile, user=appointment.user)
+        
+        Notifications.objects.create(
+                user=appointment.user,
+                title="Appointment Cancelled",
+                notif_type="admin",
+                message=f"The appointment for pet: {appointment.pet_name} on {appointment.scheduled_date} has been cancelled by {profile.first_name} {profile.last_name}",
+            )
 
         messages.success(request, 'Your appointment has been cancelled successfully.')
 
@@ -254,8 +263,16 @@ def admin_home(request):
 def accept_appointment(request, appointment_id):
     if request.method == 'POST' and request.user.is_authenticated:
         appointment = get_object_or_404(ScheduledServices, id=appointment_id, status=False, cancelled=False)
+        
         appointment.status = True
         appointment.save()
+        
+        Notifications.objects.create(
+            user=appointment.user,
+            title="Appointment Accepted",
+            message=f"Your appointment for {appointment.pet_name} ({appointment.service}) has been accepted.",
+            notif_type="client"
+        )
 
         messages.success(request, 'Appointment has been accepted successfully.')
     return redirect('pending-appointments')
@@ -264,8 +281,16 @@ def accept_appointment(request, appointment_id):
 def reject_appointment(request, appointment_id):
     if request.method == 'POST' and request.user.is_authenticated:
         appointment = get_object_or_404(ScheduledServices, id=appointment_id, status=False, cancelled=False)
+        
         appointment.status = None
         appointment.save()
+        
+        Notifications.objects.create(
+            user=appointment.user,
+            title="Appointment Rejected",
+            message=f"Your appointment for {appointment.pet_name} ({appointment.service}) has been rejected.",
+            notif_type="client"
+        )
 
         messages.success(request, 'Appointment has been rejected successfully.')
     return redirect('pending-appointments')
@@ -291,11 +316,14 @@ def admin_upcoming_appointments_view(request):
         appointments = []
     return render(request, 'admin-upcoming-appointments.html', {'appointments': appointments})
 
+@login_required
 def pet_list(request):
     pets = Pets.objects.all()
     
     return render(request, 'admin-update-pet.html', {'pets': pets})
 
+
+@login_required
 def update_pet(request, pet_id):
     pet = get_object_or_404(Pets, id=pet_id)
     
@@ -310,10 +338,14 @@ def update_pet(request, pet_id):
     return render(request, 'admin-update-pet.html', {'form': form, 'pet': pet})
 
 
+
+@login_required
 def profile_list(request):
     profiles = Profile.objects.all()
     return render(request, 'admin-update-profile.html', {'profiles': profiles})
 
+
+@login_required
 def update_profile(request, profile_id):
     profile = get_object_or_404(Profile, id=profile_id)
     if request.method == 'POST':
@@ -326,6 +358,7 @@ def update_profile(request, profile_id):
     
     return render(request, 'admin-update-profile.html', {'form': form, 'profile': profile})
 
+@login_required
 def unfinished_appointments(request):
     if request.user.is_authenticated:
         appointments = ScheduledServices.objects.filter(status=True, finished=False, cancelled=False)
@@ -334,6 +367,28 @@ def unfinished_appointments(request):
         
     return render(request, 'admin-unfinished-appointments.html', {'appointments': appointments})
 
+@login_required
+def update_appointment_status(request, appointment_id):
+    appointment = get_object_or_404(ScheduledServices, id=appointment_id)
+
+    if request.method == 'POST':
+        appointment.finished = True 
+        appointment.save()
+        
+        Notifications.objects.create(
+                user=appointment.user,
+                title="Appointment Finished",
+                message=f"Thank you for your patronage!",
+                notif_type="client",
+            )
+        
+        return redirect('unfinished-appointments')
+
+    return render(request, 'admin-unfinished-appointments.html', {
+        'appointment': appointment
+    })
+
+@login_required
 def pet_details(request, pet_id):
     pet = get_object_or_404(Pets, id=pet_id)
     pet_data = {
@@ -342,3 +397,52 @@ def pet_details(request, pet_id):
         'pet_health': pet.pet_health
     }
     return JsonResponse(pet_data)
+
+@login_required
+def getting_started(request):
+    return render(request, 'getting-started.html')
+
+@login_required
+def onboarding(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        middle_initial = request.POST.get('middle_initial')
+        email = request.POST.get('email')
+        mobile_no = request.POST.get('mobile_no')
+
+        print(f"First Name: {first_name}, Last Name: {last_name}, Email: {email}")  # Debugging print
+
+        if not first_name or not last_name or not email or not mobile_no:
+            messages.error(request, 'Please fill in the required details.')
+        else:
+            try:
+                profile = Profile.objects.get(user=request.user)
+                print(f"Existing Profile Found: {profile}")  
+
+                profile.first_name = first_name
+                profile.last_name = last_name
+                profile.middle_initial = middle_initial
+                profile.email = email
+                profile.mobile_no = mobile_no
+                profile.onboarding_status = True
+                profile.save()
+
+                messages.success(request, 'Profile updated successfully!')
+                return redirect('home')
+
+            except Profile.DoesNotExist:
+                print("Profile not found, creating new one...")
+                Profile.objects.create(
+                    user=request.user,
+                    first_name=first_name,
+                    last_name=last_name,
+                    middle_initial=middle_initial,
+                    email=email,
+                    mobile_no=mobile_no,
+                    onboarding_status=True
+                )
+                messages.success(request, 'Profile created successfully!')
+                return redirect('home')
+
+    return render(request, 'onboarding.html')
