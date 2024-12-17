@@ -43,7 +43,6 @@
                     </svg>
                 </button>
             
-                <!-- Dropdown menu -->
                 <div class="dropdown-menu hidden" id="dropdown-menu">
                     <button id="profile-modal-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
@@ -216,19 +215,17 @@
 
     // Sidebar
     document.getElementById('sidebar-toggle-btn').addEventListener('click', function() {
-        // Toggle the sidebar
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
     
-        sidebar.classList.toggle('open'); // Toggle the sidebar visibility
-        overlay.classList.toggle('active'); // Toggle the overlay visibility
+        sidebar.classList.toggle('open'); 
+        overlay.classList.toggle('active'); 
     });
-    
-    // Close sidebar when overlay is clicked
+
     document.getElementById('overlay').addEventListener('click', function() {
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.remove('open');
-        this.classList.remove('active'); // Hide the overlay when clicked
+        this.classList.remove('active'); 
     });
     
 </script>

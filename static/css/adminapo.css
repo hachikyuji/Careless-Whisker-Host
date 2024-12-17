@@ -225,15 +225,15 @@ html, body {
   }
 
   .home-btn {
-    position: absolute; /* Position the button absolutely within the content */
-    top: 10px; /* Distance from the top */
-    left: 10px; /* Distance from the left */
-    text-decoration: none; /* Remove underline from the link */
+    position: absolute; 
+    top: 10px; 
+    left: 10px; 
+    text-decoration: none; 
 }
 
 .home-btn-button {
-    background-color: black; /* Add a background color to the button */
-    color: white; /* White text color */
+    background-color: black; 
+    color: white; 
     padding: 5px 10px;
     font-size: 14px;
     font-family: "Montserrat";
@@ -244,5 +244,5 @@ html, body {
 }
 
 .home-btn-button:hover {
-    background-color: rgb(113, 97, 97); /* Change color on hover */
+    background-color: rgb(113, 97, 97); 
 }

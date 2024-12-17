@@ -178,3 +178,26 @@ html, body {
     min-width: 300px;
     text-align: center;
   }
+
+  .home-btn {
+    position: absolute; 
+    top: 10px; 
+    left: 10px; 
+    text-decoration: none; 
+}
+
+.home-btn-button {
+    background-color: black; 
+    color: white; 
+    padding: 5px 10px;
+    font-size: 14px;
+    font-family: "Montserrat";
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.home-btn-button:hover {
+    background-color: rgb(113, 97, 97); 
+}

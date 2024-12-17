@@ -11,6 +11,13 @@
 <body>
 
 <div class="admin-profiles-page">
+    <a href="{% url 'admin-home' %}" class="home-btn">
+        <button class="home-btn-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>
+            </svg>
+        </button>
+    </a>
     <div class="admin-profiles-main-text">
         <p>Update Profile Details</p>
     </div>
@@ -54,7 +61,6 @@
     </div>
 </div>
 
-<!-- Modal for Updating Profile -->
 <div id="updateProfileModal" class="modal" style="display:none;">
     <div class="admin-profiles-modal-content">
         <h2>Update Profile: <span id="profileName"></span></h2>
@@ -88,38 +94,38 @@
     </div>
 </div>
 
-<script>
-    // JavaScript to handle row click, populate modal and submit form
+<div id="overlay" class="admin-profiles-overlay" style="display: none;" onclick="closeModal()"></div>        
 
-    // Add click event listeners to the rows in the profile table
+<script>
     document.querySelectorAll('.clickable-row').forEach(row => {
         row.addEventListener('click', function () {
-            // Capture profile data from the clicked row
             const profileId = this.getAttribute('data-id');
             const profileEmail = this.getAttribute('data-email');
             const profileFirstName = this.getAttribute('data-first-name');
             const profileMiddleInitial = this.getAttribute('data-middle-initial');
             const profileLastName = this.getAttribute('data-last-name');
             const profileMobileNo = this.getAttribute('data-mobile-no');
-
-            // Populate modal form with the profile data
+    
+            // Populate the modal form fields
             document.getElementById('profileName').textContent = profileFirstName + ' ' + profileLastName;
             document.getElementById('email').value = profileEmail;
             document.getElementById('first_name').value = profileFirstName;
             document.getElementById('middle_initial').value = profileMiddleInitial;
             document.getElementById('last_name').value = profileLastName;
             document.getElementById('mobile_no').value = profileMobileNo;
-
-            // Update the form action to the URL for updating this profile
+    
+            // Set form action
             document.getElementById('updateProfileForm').action = `/profiles/update/${profileId}/`;
-
-            // Show the modal
+    
+            // Show overlay and modal
+            document.getElementById('overlay').style.display = 'block';
             document.getElementById('updateProfileModal').style.display = 'block';
         });
     });
-
-    // Function to close the modal
+    
     function closeModal() {
+        // Hide overlay and modal
+        document.getElementById('overlay').style.display = 'none';
         document.getElementById('updateProfileModal').style.display = 'none';
     }
 </script>

@@ -10,6 +10,14 @@
 <body>
 
 <div class="admin-pets-page">
+    <a href="{% url 'admin-home' %}" class="home-btn">
+        <button class="home-btn-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>
+            </svg>
+        </button>
+    </a>
+    
     <div class="admin-pets-main-text">
         <p>Pet Details</p>
     </div>
@@ -134,10 +142,8 @@ document.querySelectorAll('.clickable-row').forEach(row => {
         document.getElementById('pet_condition').value = petCondition;
         document.getElementById('pet_health').value = petHealth;
 
-        // Change form action to update the pet
         document.getElementById('updatePetForm').action = `/pets/update/${petId}/`;
 
-        // Show modal
         document.getElementById('updatePetModal').style.display = 'block';
     });
 });

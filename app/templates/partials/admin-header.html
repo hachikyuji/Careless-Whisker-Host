@@ -15,6 +15,11 @@
         <a href="{% url 'admin-home' %}">
             <img class="logo" src="{% static 'assets/login/logo.png' %}" alt="Logo">
         </a>
+        <button id="sidebar-toggle-btn" class="sidebar-toggle-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#FFFFFF" viewBox="0 0 24 24">
+                <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/>
+            </svg>
+        </button>
     </div>
 
     <div class="profile-header-right">
@@ -39,7 +44,6 @@
                 </svg>
             </button>
         
-            <!-- Dropdown menu -->
             <div class="dropdown-menu hidden" id="dropdown-menu">
                 <button id="profile-modal-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
@@ -61,6 +65,18 @@
         
     </div>
 </div>
+
+<div id="sidebar" class="sidebar">
+    <ul>
+        <li><a href="/pending-appointments/">Pending Appointments</a></li>
+        <li><a href="/upcoming-appointments/">Appointments Status</a></li>
+        <li><a href="/unfinished-appointments/">Ongoing Appointments</a></li>
+        <li><a href="/pets/">Registered Pets</a></li>
+        <li><a href="/profiles/">User Profiles</a></li>
+    </ul>
+</div>
+
+<div id="sb-overlay" class="sb-overlay"></div>
 
 <div id="profile-modal" class="modal hidden">
     <div class="overlay"></div>
@@ -171,6 +187,22 @@
             }
         });
 
+    });
+
+    // Sidebar
+    document.getElementById('sidebar-toggle-btn').addEventListener('click', function() {
+        // Toggle the sidebar
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+    
+        sidebar.classList.toggle('open'); 
+        overlay.classList.toggle('active'); 
+    });
+
+    document.getElementById('overlay').addEventListener('click', function() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.remove('open');
+        this.classList.remove('active'); 
     });
     
 </script>
