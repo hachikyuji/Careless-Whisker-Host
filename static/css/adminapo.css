@@ -169,6 +169,7 @@ html, body {
     border-radius: 5px;
     margin-bottom: 15px;
     color: white;
+    font-family: "Montserrat";
 }
 
 .alert-success {
