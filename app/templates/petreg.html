@@ -6,15 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Registration</title>
     <link rel="stylesheet" href="{% static 'css/petreg.css' %}">
-    <link rel="stylesheet" href="{% static 'css/onboarding.css' %}">
 </head>
 <body>
     <div class="register-pet-page">
-        <div class="sidebar">
-            <!-- Sidebar content can go here -->
-        </div>
+        <a href="{% url 'home' %}" class="home-btn">
+            <button class="home-btn-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                    <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>
+                </svg>
+            </button>
+        </a>
         
         <div class="register-pet-content">
+
             <div class="petreg-left-section">
                 <div class="petreg-logo">
                     <img class="onboarding-logo-top" src="{% static 'assets/login/logo.png' %}" alt="Logo" />
@@ -92,6 +96,23 @@
             </div>
         </div>
     </div>
-    
+
+    <script>
+        document.getElementById('sidebar-toggle-btn').addEventListener('click', function() {
+            // Toggle the sidebar
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+        
+            sidebar.classList.toggle('open'); // Toggle the sidebar visibility
+            overlay.classList.toggle('active'); // Toggle the overlay visibility
+        });
+        
+        // Close sidebar when overlay is clicked
+        document.getElementById('overlay').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.remove('open');
+            this.classList.remove('active'); // Hide the overlay when clicked
+        });
+    </script>
 </body>
 </html>

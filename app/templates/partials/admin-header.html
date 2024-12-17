@@ -1,0 +1,179 @@
+{% load static %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/Home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+<div class="header">
+    <div class="header-left">
+        <a href="{% url 'admin-home' %}">
+            <img class="logo" src="{% static 'assets/login/logo.png' %}" alt="Logo">
+        </a>
+    </div>
+
+    <div class="profile-header-right">
+        <div class="header-notif">
+            <button id="notif-btn" data-notif-unread="{{ notifications|length }}">
+                {% if notifications %}
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323">
+                    <path d="M80-560q0-100 44.5-183.5T244-882l47 64q-60 44-95.5 111T160-560H80Zm720 0q0-80-35.5-147T669-818l47-64q75 55 119.5 138.5T880-560h-80ZM160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z"/>
+                </svg>
+                {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                    <path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Z"/>
+                </svg>
+                {% endif %}
+            </button>
+        </div>
+
+        <div class="profile-dropdown">
+            <button class="profile-btn" id="profile-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                    <path d="M480-360 280-560h400L480-360Z" />
+                </svg>
+            </button>
+        
+            <!-- Dropdown menu -->
+            <div class="dropdown-menu hidden" id="dropdown-menu">
+                <button id="profile-modal-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                        <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z" />
+                    </svg>
+                    Profile
+                </button>
+
+                <a href="/logout">
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                        </svg>
+                        Log Out
+                    </button>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div id="profile-modal" class="modal hidden">
+    <div class="overlay"></div>
+    <div class="modal-content">
+        <h2>User Profile</h2>
+        {% if user.is_authenticated %}
+            <div>
+                <p><strong>Name:</strong> {{ user.profile.first_name }} {{ user.profile.last_name }}</p>
+                <p><strong>Email:</strong> {{ user.profile.email }}</p>
+                <p><strong>Mobile No.:</strong> {{ user.profile.mobile_no }}</p>
+                <p><strong>Onboarding Status:</strong> 
+                    {% if user.profile.onboarding_complete %}
+                        Finished
+                    {% else %}
+                        Not Finished
+                    {% endif %}
+                </p>
+                <p class="profile-txt">
+                    Contact an admin to update your details via walk-in or email! <br/>
+                    <strong>carelesswhisker1453@gmail.com</strong>
+                </p>
+            </div>
+        {% else %}
+            <p>Please log in to view your profile.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div id="notif-modal" class="modal hidden">
+    <div class="overlay"></div>
+    <div class="modal-content">
+        <h2>Notifications</h2>
+        <ul>
+            {% if notifications %}
+                {% for notif in notifications %}
+                    <li class="{% if notif.read %}read{% else %}unread{% endif %}" data-id="{{ notif.id }}">
+                        <h4>{{ notif.title }}</h4>
+                        <p>{{ notif.message }}</p>
+                        <span class="notif-date-span">{{ notif.created_at|date:"F j, Y, g:i a" }}</span>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>No new notifications</li>
+            {% endif %}
+        </ul>
+        <button class="close-notif-btn">Close</button>
+    </div>
+</div>
+
+<script>
+    // Dropdown Menu
+    document.addEventListener("DOMContentLoaded", function () {
+        const profileToggle = document.getElementById("profile-toggle");
+        const dropdownMenu = document.getElementById("dropdown-menu");
+
+        profileToggle.addEventListener("click", () => {
+            dropdownMenu.classList.toggle("hidden");
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!profileToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add("hidden");
+            }
+        });
+    });
+
+    // Profile Modal
+    document.addEventListener("DOMContentLoaded", function () {
+        const profileModal = document.getElementById("profile-modal");
+        const profileButton = document.getElementById("profile-modal-btn"); 
+        const overlay = document.querySelector(".overlay");
+
+        profileButton.addEventListener("click", () => {
+            profileModal.classList.remove("hidden");
+        });
+
+        const closeProfileModal = () => {
+            profileModal.classList.add("hidden"); 
+        };
+
+        overlay.addEventListener("click", closeProfileModal);
+    });
+
+    // Notif Modal
+
+    document.querySelector('.close-notif-btn').addEventListener('click', function() {
+        fetch('{% url "mark_admin_notifications_as_read" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Optionally, you can pass the CSRF token here if you're using CSRF protection
+                // 'X-CSRFToken': document.querySelector('[name="csrfmiddlewaretoken"]').value
+            },
+            body: JSON.stringify({})  // Send any necessary data here
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                document.querySelectorAll('.modal-content li').forEach(function(item) {
+                    item.classList.remove('unread');
+                    item.classList.add('read');
+                });
+
+                document.querySelector('#notif-modal').classList.add('hidden');
+                location.reload();
+            } else {
+                console.error('Error marking notifications as read:', data.message);
+            }
+        });
+
+    });
+    
+</script>
+
+</body>
+</html>

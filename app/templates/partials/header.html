@@ -9,55 +9,73 @@
 </head>
 
 <body>
-<div class="header">
-    <div class="header-left">
-        <a href="{% url 'home' %}">
-            <img class="logo" src="{% static 'assets/login/logo.png' %}" alt="Logo">
-        </a>
-    </div>
-
-    <div class="profile-header-right">
-        <!-- Notifications -->
-        <div class="header-notif">
-            <button id="notif-btn" data-notif-unread="{{ unread_notifications|length }}">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
-                    <path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Z"/>
+    <div class="header">
+        <div class="header-left">
+            <a href="{% url 'home' %}">
+                <img class="logo" src="{% static 'assets/login/logo.png' %}" alt="Logo">
+            </a>
+            <button id="sidebar-toggle-btn" class="sidebar-toggle-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#FFFFFF" viewBox="0 0 24 24">
+                    <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/>
                 </svg>
             </button>
         </div>
-
-        <div class="profile-dropdown">
-            <!-- Dropdown toggle button -->
-            <button class="profile-btn" id="profile-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
-                    <path d="M480-360 280-560h400L480-360Z" />
-                </svg>
-            </button>
-        
-            <!-- Dropdown menu -->
-            <div class="dropdown-menu hidden" id="dropdown-menu">
-                <!-- Profile Button -->
-                <button id="profile-modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
-                        <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z" />
+    
+        <div class="profile-header-right">
+            <div class="header-notif">
+                <button id="notif-btn" data-notif-unread="{{ notifications|length }}">
+                    {% if notifications %}
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323">
+                        <path d="M80-560q0-100 44.5-183.5T244-882l47 64q-60 44-95.5 111T160-560H80Zm720 0q0-80-35.5-147T669-818l47-64q75 55 119.5 138.5T880-560h-80ZM160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z"/>
                     </svg>
-                    Profile
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                        <path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Z"/>
+                    </svg>
+                    {% endif %}
                 </button>
-        
-                <!-- Logout Button -->
-                <a href="/logout">
-                    <button>
+            </div>
+    
+            <div class="profile-dropdown">
+                <button class="profile-btn" id="profile-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                        <path d="M480-360 280-560h400L480-360Z" />
+                    </svg>
+                </button>
+            
+                <!-- Dropdown menu -->
+                <div class="dropdown-menu hidden" id="dropdown-menu">
+                    <button id="profile-modal-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
-                            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                            <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z" />
                         </svg>
-                        Log Out
+                        Profile
                     </button>
-                </a>
+    
+                    <a href="/logout">
+                        <button>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                                <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                            </svg>
+                            Log Out
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
-        
     </div>
-</div>
+    
+    <div id="sidebar" class="sidebar">
+        <ul>
+            <li><a href="/register-pet/">Pet Registration</a></li>
+            <li><a href="/user-pets/">User Pets</a></li>
+            <li><a href="/user-scheduled-services/">Pending Appointments</a></li>
+            <li><a href="/user-upcoming-services/">Current Appointments</a></li>
+        </ul>
+    </div>
+
+    <div id="sb-overlay" class="sb-overlay"></div>
+    
 
 <div id="profile-modal" class="modal hidden">
     <div class="overlay"></div>
@@ -93,7 +111,7 @@
         <ul>
             {% if notifications %}
                 {% for notif in notifications %}
-                    <li class="{% if notif.read %}read{% else %}unread{% endif %}">
+                    <li class="{% if notif.read %}read{% else %}unread{% endif %}" data-id="{{ notif.id }}">
                         <h4>{{ notif.title }}</h4>
                         <p>{{ notif.message }}</p>
                         <span class="notif-date-span">{{ notif.created_at|date:"F j, Y, g:i a" }}</span>
@@ -103,10 +121,9 @@
                 <li>No new notifications</li>
             {% endif %}
         </ul>
-        <button class="close-notif-btn" onclick="closeNotifModal()">Close</button>
+        <button class="close-notif-btn">Close</button>
     </div>
 </div>
-
 
 <script>
     // Dropdown Menu
@@ -142,6 +159,78 @@
         overlay.addEventListener("click", closeProfileModal);
     });
 
+    document.addEventListener("DOMContentLoaded", () => {
+        const notifButton = document.getElementById('notif-btn');
+        const notifModal = document.getElementById('notif-modal');
+        const closeNotifButton = document.querySelector(".close-notif-btn");
+    
+        const updateNotifButton = () => {
+            const unreadNotifs = document.querySelectorAll("#notif-modal li.unread");
+            if (unreadNotifs.length > 0) {
+                notifButton.classList.add("red-notif");
+            } else {
+                notifButton.classList.remove("red-notif");
+            }
+        };
+    
+        document.getElementById('notif-btn').addEventListener('click', async () => {
+            notifModal.classList.toggle('hidden');
+            updateNotifButton();
+    
+            const unreadNotifs = [...document.querySelectorAll("#notif-modal li.unread")].map(
+                (notif) => parseInt(notif.getAttribute("data-id"), 10)
+            );
+    
+            if (unreadNotifs.length > 0) {
+                try {
+                    const csrfToken = "{{ csrf_token }}";
+                    const response = await fetch("{% url 'update_notifications_read' %}", {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrfToken,
+                        },
+                        body: JSON.stringify({ notifications: unreadNotifs }),
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error(`HTTP status ${response.status}`);
+                    }
+    
+                    document.querySelectorAll("#notif-modal li.unread").forEach((notif) => {
+                        notif.classList.remove("unread");
+                        notif.classList.add("read");
+                    });
+                } catch (error) {
+                    console.error("Error updating notifications:", error);
+                }
+            }
+        });
+    
+        closeNotifButton.addEventListener("click", () => {
+            notifModal.classList.add('hidden');
+            location.reload();
+        });
+    });
+    
+
+    // Sidebar
+    document.getElementById('sidebar-toggle-btn').addEventListener('click', function() {
+        // Toggle the sidebar
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+    
+        sidebar.classList.toggle('open'); // Toggle the sidebar visibility
+        overlay.classList.toggle('active'); // Toggle the overlay visibility
+    });
+    
+    // Close sidebar when overlay is clicked
+    document.getElementById('overlay').addEventListener('click', function() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.remove('open');
+        this.classList.remove('active'); // Hide the overlay when clicked
+    });
+    
 </script>
 
 </body>

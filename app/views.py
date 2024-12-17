@@ -13,6 +13,9 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .serializers import UserRegistrationSerializer, LoginSerializer, NotificationSerialzer
 from .models import Profile, Notifications, Pets, ScheduledServices
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Create your views here.
 
@@ -257,7 +260,12 @@ def cancel_appointment(request, appointment_id):
 # Admin Views
 @login_required
 def admin_home(request):
-    return render (request, 'admin-home.html')
+    if request.user.is_authenticated:
+        notifications = Notifications.objects.filter(notif_type="admin", read=False)
+    else:
+        notifications = []
+        
+    return render(request, 'admin-home.html', {'notifications': notifications})
 
 @login_required
 def accept_appointment(request, appointment_id):
@@ -446,3 +454,36 @@ def onboarding(request):
                 return redirect('home')
 
     return render(request, 'onboarding.html')
+
+@csrf_exempt  # Only needed if CSRF tokens are not handled properly
+@require_http_methods(["PATCH"])
+def update_notifications_read(request):
+    try:
+        data = json.loads(request.body)  # Parse JSON from the request body
+        notification_ids = data.get("notifications", [])
+
+        # Validate the data
+        if not isinstance(notification_ids, list) or not all(isinstance(id, int) for id in notification_ids):
+            return JsonResponse({"error": "Invalid data format"}, status=400)
+
+        # Update notifications
+        updated_count = Notifications.objects.filter(
+            id__in=notification_ids, user=request.user
+        ).update(read=True)
+
+        return JsonResponse({"message": f"{updated_count} notifications updated"}, status=200)
+
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    
+@csrf_exempt
+@login_required
+def mark_admin_notifications_as_read(request):
+    if request.user.is_authenticated and request.user.is_staff:  # Make sure the user is an admin
+        # Mark all "admin" notifications as read
+        Notifications.objects.filter(notif_type="admin", read=False).update(read=True)
+        return JsonResponse({"status": "success"})
+    return JsonResponse({"status": "error", "message": "User not authenticated or not an admin"})
+    

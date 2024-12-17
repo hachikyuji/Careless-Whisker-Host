@@ -31,6 +31,8 @@ body {
 .header-left {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%; 
 }
 
 .logo {
@@ -70,17 +72,28 @@ body {
   background-color: black;
   color: white;
   border: 2px solid white;
-  padding: 8px 16px !important; 
+  padding: 8px 16px !important;
   font-size: 16px !important;
   cursor: pointer;
   font-family: "Montserrat";
   transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex; /* Use inline-flex to control the layout */
+  justify-content: center; /* Center the text horizontally */
+  align-items: center; /* Center the text vertically */
+}
+
+.schedule-now-btn a {
+  color: white;
+  text-decoration: none; /* Remove the underline */
+  display: inline-block; /* Ensure the anchor doesn't break the text */
+  white-space: nowrap; /* Prevent text wrapping inside the button */
 }
 
 .schedule-now-btn:hover {
   background-color: #555;
   color: #fff;
 }
+
 
 .btn-log-in-link{
   color: white;
@@ -356,7 +369,6 @@ body {
   width: 20px;
   height: 20px;
   margin-left: 3px;
-  fill: white;
 }
 
 .profile-header-right {

@@ -9,11 +9,18 @@ urlpatterns = [
     path('user/register/', views.UserRegistrationView.as_view(), name="user-register"),
     
     # User paths
+    
+    #User Home
     path('home/', views.home, name="home"),
     path('logout/', views.logoutView, name="logout"),
+    path('api/notifications/update-read/', views.update_notifications_read, name='update_notifications_read'),
     path('mark-notifications-as-read/', views.mark_notifications_as_read, name='mark_notifications_as_read'),
+    
+    # Pet Registration
     path('register-pet/', views.pet_registration, name='pet_registration'),
     path('user-pets/', views.userPets, name="user-pets"),
+    
+    # Schedule Service
     path('schedule/', views.schedule_service, name='schedule_service'),
     path('user-scheduled-services/', views.scheduled_services, name="scheduled_services"),
     path('user-upcoming-services/', views.upcoming_services, name="upcoming_services"),
@@ -21,6 +28,7 @@ urlpatterns = [
     
     # Admin paths
     path('admin-home/', views.admin_home, name="admin-home"),
+    path('mark_admin_notifications_as_read/', views.mark_admin_notifications_as_read, name='mark_admin_notifications_as_read'),
     
     # Admin Pending Appointments
     path('pending-appointments/', views.admin_pending_appointments_view, name='pending-appointments'),

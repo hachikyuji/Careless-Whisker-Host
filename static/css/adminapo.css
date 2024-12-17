@@ -223,3 +223,26 @@ html, body {
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
   }
+
+  .home-btn {
+    position: absolute; /* Position the button absolutely within the content */
+    top: 10px; /* Distance from the top */
+    left: 10px; /* Distance from the left */
+    text-decoration: none; /* Remove underline from the link */
+}
+
+.home-btn-button {
+    background-color: black; /* Add a background color to the button */
+    color: white; /* White text color */
+    padding: 5px 10px;
+    font-size: 14px;
+    font-family: "Montserrat";
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.home-btn-button:hover {
+    background-color: rgb(113, 97, 97); /* Change color on hover */
+}
