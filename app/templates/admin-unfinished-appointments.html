@@ -70,7 +70,7 @@
     </div>
 
     <div id="updateAppointmentModal" class="modal" style="display:none;">
-        <!-- Overlay for Modal -->
+
         <div id="modal-overlay" class="overlay" style="display:none;"></div>
         
         <div class="modal-content">
@@ -96,22 +96,25 @@
                 const petName = row.getAttribute('data-pet-name');
                 const service = row.getAttribute('data-service');
         
-                // Set modal values
                 document.getElementById('modal-pet-name').textContent = petName;
                 document.getElementById('modal-service').textContent = service;
         
-                // Set the hidden input field value for appointment_id
                 document.getElementById('appointment_id').value = appointmentId;
-        
-                // Set the form's action URL dynamically
+
                 const form = document.getElementById('updateAppointmentForm');
-                form.action = `/appointments/update-status/${appointmentId}/`; // Dynamically set the action URL
+                form.action = `/appointments/update-status/${appointmentId}/`; 
         
-                // Show modal and overlay
                 document.getElementById('updateAppointmentModal').style.display = 'block';
                 document.getElementById('modal-overlay').style.display = 'block'; // Show the overlay
             });
-        });              
+        });
+
+        function closeModal() {
+            document.getElementById('updateAppointmentModal').style.display = 'none';
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+        
+        document.getElementById('modal-overlay').addEventListener('click', closeModal);
     </script>
 </body>
 </html>

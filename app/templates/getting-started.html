@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Getting Started</title>
     <link rel="stylesheet" href="{% static 'css/onboarding.css' %}">
+    <link rel="stylesheet" href="{% static 'css/LoadingIndicator.css' %}">
+
 </head>
 <body>
     <div class="getting-started-page">
@@ -25,12 +27,16 @@
             </div>
         </div>
 
-        <!-- Modal (Initially Hidden) -->
         <div id="skip-modal" class="modal hidden">
             <div class="overlay" onclick="toggleModal()"></div>
             <div class="modal-content">
                 <h2>You skipped the setup!</h2>
                 <p>You will be asked again after logging in.</p>
+
+                <div class="loading-container">
+                    <div class="loader"></div>
+                </div>
+
                 <div id="loading-indicator-container">
                     <button class="home-btn" onclick="handleUnderstand()">
                         I Understand
@@ -41,29 +47,32 @@
     </div>
 
     <script>
-        // Ensure the modal is hidden initially
         let modal = document.getElementById("skip-modal");
-        modal.classList.add("hidden");  // Hide modal on load
+        modal.classList.add("hidden");  
 
-        // Set up the Skip button functionality
         let skipBtn = document.getElementById("skip-btn");
 
         skipBtn.addEventListener("click", function() {
-            modal.classList.remove("hidden"); // Show modal when Skip button is clicked
+            modal.classList.remove("hidden"); 
             document.body.classList.add("active-modal");
         });
 
-        // Function to close the modal
         function toggleModal() {
             modal.classList.add("hidden");
             document.body.classList.remove("active-modal");
         }
 
-        // Simulate loading and redirect after clicking 'I Understand'
+
         function handleUnderstand() {
+            const loadingContainer = document.querySelector('.loading-container');
+            const homeBtn = document.querySelector('.home-btn');
+        
+            homeBtn.style.display = 'none';
+            loadingContainer.style.display = 'flex';
+        
             setTimeout(function() {
-                window.location.href = "{% url 'home' %}";  // Redirect after 'I Understand'
-            }, 2000);  // 2-second delay
+                window.location.href = "{% url 'home' %}";
+            }, 2000);
         }
     </script>
 </body>

@@ -436,7 +436,7 @@ def onboarding(request):
                 profile.middle_initial = middle_initial
                 profile.email = email
                 profile.mobile_no = mobile_no
-                profile.onboarding_status = True
+                profile.onboarding_complete = True
                 profile.save()
 
                 messages.success(request, 'Profile updated successfully!')

@@ -55,8 +55,8 @@
                     name="mobile_no"
                 />
 
-                <div class="loading-container hidden">
-                    <div class="loader"></div> <!-- Spinner element -->
+                <div class="loading-container">
+                    <div class="loader"></div>
                 </div>
           
                 <button type="submit" class="onboarding-button" id="submit-btn">
@@ -68,19 +68,18 @@
     </div>
 
     <script>
-        document.querySelector("form").addEventListener("submit", function(event) {
-            const submitButton = document.getElementById("submit-btn");
-            const loadingContainer = document.querySelector("loading-container"); 
-        
-            event.preventDefault();
-        
-            submitButton.disabled = true;
-            loadingContainer.classList.remove("hidden");  
-
-            setTimeout(() => {
-                event.target.submit();  // Submit the form to the backend
-            }, 2000);  // 2-second delay
-        });        
+        document.addEventListener("DOMContentLoaded", function () {
+            const loginForm = document.querySelector('.onboarding-form');
+            const loadingContainer = document.querySelector('.loading-container');
+            const loginButton = document.querySelector('onboarding-button');
+    
+            loginForm.addEventListener('submit', function (event) {
+                loadingContainer.style.display = 'flex';
+    
+                loginButton.disabled = true;
+                loginButton.textContent = "Saving...";
+            });
+        });
     </script>
 </body>
 </html>
