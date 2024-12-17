@@ -32,7 +32,10 @@ def login(request):
             if user.profile.account_type == 'admin':
                 return redirect('admin-home')
             elif user.profile.account_type =='client':
-                return redirect('home')
+                if user.profile.onboarding_complete == True:
+                    return redirect('home')
+                else:
+                    return redirect('getting-started')
             else:
                 messages.error(request, "Invalid account type!")
         messages.error(request, "Invalid credentials")
