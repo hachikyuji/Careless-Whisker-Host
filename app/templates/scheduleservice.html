@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="sched-page">
-        <a href="{% url 'admin-home' %}" class="home-btn">
+        <a href="{% url 'home' %}" class="home-btn">
             <button class="home-btn-button">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
                     <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>
@@ -20,14 +20,6 @@
         <div class="sched-h2">
             <h2>Schedule a Service</h2>
         </div>
-        
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
         
         <div class="sched-page-content">
             <div class="schedpage-left">
@@ -83,10 +75,16 @@
         </div>
     </div>
 
-    <!-- Modal for selecting the date -->
     <div class="modal" id="dateModal">
         <div class="overlay" onclick="closeDateModal()"></div>
         <div class="modal-content">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
             <h2>Choose an Appropriate Time</h2>
             <p>Please select a suitable time for the service. <br /><strong> Mon-Fri 8 AM - 5 PM <strong></p>
             <button onclick="closeDateModal()">Proceed</button>

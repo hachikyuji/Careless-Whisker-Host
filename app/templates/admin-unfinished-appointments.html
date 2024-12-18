@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Unfinished Appointments</title>
     <link rel="stylesheet" href="{% static 'css/adminapo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/LoadingIndicator.css' %}">
 </head>
 <body>
     <div class="admin-apo-page">
@@ -80,6 +81,11 @@
             <form method="POST" id="updateAppointmentForm" action="">
                 {% csrf_token %}
                 <input type="hidden" name="appointment_id" id="appointment_id">
+
+                <div class="loading-container">
+                    <div class="loader"></div>
+                </div>
+
                 <div class="modal-actions">
                     <button type="submit">Mark as Finished</button>
                     <button type="button" onclick="closeModal()">Cancel</button>
@@ -100,14 +106,48 @@
                 document.getElementById('modal-service').textContent = service;
         
                 document.getElementById('appointment_id').value = appointmentId;
-
+        
                 const form = document.getElementById('updateAppointmentForm');
-                form.action = `/appointments/update-status/${appointmentId}/`; 
+                form.action = `/appointments/update-status/${appointmentId}/`;
         
                 document.getElementById('updateAppointmentModal').style.display = 'block';
-                document.getElementById('modal-overlay').style.display = 'block'; // Show the overlay
+                document.getElementById('modal-overlay').style.display = 'block';
+        
+                form.addEventListener('submit', function handleFormSubmission(event) {
+                    event.preventDefault();
+        
+                    const loadingContainer = document.querySelector('.loading-container');
+                    loadingContainer.style.display = 'flex';
+        
+                    const formData = new FormData(form);
+        
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                        },
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                setTimeout(() => {
+                                    window.location.href = '/pets/';
+                                }, 2000);
+                            } else {
+                                alert('Failed to update appointment. Please try again.');
+                                loadingContainer.style.display = 'none';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred. Please try again.');
+                            loadingContainer.style.display = 'none';
+                        });
+        
+                    form.removeEventListener('submit', handleFormSubmission);
+                });
             });
-        });
+        });             
 
         function closeModal() {
             document.getElementById('updateAppointmentModal').style.display = 'none';
