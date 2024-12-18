@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/LoadingIndicator.css' %}">
 </head>
 
 <body>
@@ -73,7 +74,7 @@
                     {% endif %}
 
                     <div class="loading-container">
-
+                        <div class="loader"></div>
                     </div>
 
                     <button type="submit" class="login-submit">
@@ -90,5 +91,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loginForm = document.querySelector('.login-form');
+            const loadingContainer = document.querySelector('.loading-container');
+            const loginButton = document.querySelector('.login-submit');
+    
+            loginForm.addEventListener('submit', function (event) {
+    
+                loadingContainer.style.display = 'flex';
+    
+                loginButton.disabled = true;
+                loginButton.textContent = "Logging in...";
+            });
+        });
+    </script>
+
 </body>
 </html>
