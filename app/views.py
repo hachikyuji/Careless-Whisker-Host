@@ -28,7 +28,6 @@ def login(request):
         if serializer.is_valid():
             user = serializer.validated_data
             auth_login(request, user)
-            messages.success(request, "Login successful!")
             if user.profile.account_type == 'admin':
                 return redirect('admin-home')
             elif user.profile.account_type =='client':
@@ -439,7 +438,6 @@ def onboarding(request):
                 profile.onboarding_complete = True
                 profile.save()
 
-                messages.success(request, 'Profile updated successfully!')
                 return redirect('home')
 
             except Profile.DoesNotExist:
@@ -453,16 +451,16 @@ def onboarding(request):
                     mobile_no=mobile_no,
                     onboarding_status=True
                 )
-                messages.success(request, 'Profile created successfully!')
+                
                 return redirect('home')
 
     return render(request, 'onboarding.html')
 
-@csrf_exempt  # Only needed if CSRF tokens are not handled properly
+@csrf_exempt  
 @require_http_methods(["PATCH"])
 def update_notifications_read(request):
     try:
-        data = json.loads(request.body)  # Parse JSON from the request body
+        data = json.loads(request.body) 
         notification_ids = data.get("notifications", [])
 
         # Validate the data
